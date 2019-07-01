@@ -1,0 +1,64 @@
+
+<html lang="en-US">
+<head>
+<title></title>
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap');
+
+html, body {
+    height: 100%;
+    @import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+    font-family: 'Ubuntu Mono', monospace, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+</style>
+<body>
+
+<div style="background:#fa8072; font-size:10vw; padding: 3vw 5vw 5vw 5vw ">
+TODAY YOU LOST
+<div id="loss" style="background:#c21807; font-size:15vw; text-align:center"></div>
+</div>
+<div id="timeNow" style="background:#fff; color: #999; font-size:4vw; text-align:right"></div>
+
+<script type="text/javascript">
+var start = 9;
+var end = 180;
+var rate = 100;
+
+setInterval(
+function(){
+
+  var d = new Date();
+  if (d.getHours()<end){
+    var calculatedLoss = rate*((d.getHours() - start)) + ((rate/60)*d.getMinutes()) + ((rate/60/60)*d.getSeconds()) + ((rate/60/60/1000)*d.getMilliseconds());
+    calculatedLoss = Math.floor(calculatedLoss * 100) / 100;
+    calculatedLoss = calculatedLoss.toFixed(2);
+    document.getElementById("loss").innerHTML = '-$'+ calculatedLoss;
+    document.title = 'You lost $'+calculatedLoss+' today';
+
+    document.getElementById("timeNow").innerHTML = 'BETWEEN '+start+':00-'+d.getHours()+':'+d.getMinutes();
+  
+  } else {
+  	var calculatedLoss = rate*((end - start));
+    calculatedLoss = calculatedLoss.toFixed(2);
+    document.getElementById("loss").innerHTML = '-$'+ calculatedLoss;
+    document.title = 'You lost $'+calculatedLoss+' today';
+
+    document.getElementById("timeNow").innerHTML = 'BETWEEN '+start+':00-'+end+':00';
+}
+
+}, 100);
+
+</script>
+</body>
+</html>
