@@ -60,7 +60,7 @@ setInterval(
 function(){
 
   var d = new Date();
-  if (d.getHours()<end){
+  if (d.getHours()>(start-1) && d.getHours()<end){
     var calculatedLoss = rate*((d.getHours() - start)) + ((rate/60)*d.getMinutes()) + ((rate/60/60)*d.getSeconds()) + ((rate/60/60/1000)*d.getMilliseconds());
     calculatedLoss = Math.floor(calculatedLoss * 100) / 100;
     calculatedLoss = calculatedLoss.toFixed(2);
