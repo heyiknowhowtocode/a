@@ -54,9 +54,7 @@ function dateDiffInDays(a, b) {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
-var aliveFor = dateDiffInDays(new Date("1992-04-28"), new Date());
-
-var countDownDate = new Date("APR 28, 2022 00:00:00").getTime();
+var aliveFor = dateDiffInDays(new Date("1992-04-27"), new Date());
 
 setInterval(
 function(){
