@@ -23,16 +23,33 @@ body {
 </style>
 <body>
 
-<div style="background:#fa8072; font-size:10vw; padding: 3vw 5vw 5vw 5vw ">
+<div id="timeNow" style="background:#fff; color:#999; font-size:5vw; text-align:right"></div>
+<div style="background:#fa8072; font-size:10vw; padding: 3vw 5vw ">
 TODAY YOU LOST
-<div id="loss" style="background:#c21807; font-size:15vw; text-align:center"></div>
+<div id="loss" style="background:#c21807; color:#fff; font-size:17vw; text-align:center; margin:2vw 0"></div>
+
 </div>
-<div id="timeNow" style="background:#fff; color: #999; font-size:4vw; text-align:right"></div>
+<div id="ageNow" style="background:#fff; color:#000; font-size:4vw; text-align:center; margin-top: 4vw"></div>
+<div id="decadeAgo" style="background:#fff; color:#000; font-size:4vw; text-align:center; margin-top: 3vw"></div>
+<div id="left30" style="background:#fff; color:#000; font-size:4vw; text-align:center; margin-top: 3vw"></div>
 
 <script type="text/javascript">
 var start = 9;
 var end = 18;
 var rate = 100;
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+function dateDiffInDays(a, b) {
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+var aliveFor = dateDiffInDays(new Date("1992-04-28"), new Date());
+
+var countDownDate = new Date("APR 28, 2022 00:00:00").getTime();
 
 setInterval(
 function(){
@@ -42,21 +59,38 @@ function(){
     var calculatedLoss = rate*((d.getHours() - start)) + ((rate/60)*d.getMinutes()) + ((rate/60/60)*d.getSeconds()) + ((rate/60/60/1000)*d.getMilliseconds());
     calculatedLoss = Math.floor(calculatedLoss * 100) / 100;
     calculatedLoss = calculatedLoss.toFixed(2);
-    document.getElementById("loss").innerHTML = '-$'+ calculatedLoss;
+    document.getElementById("loss").innerHTML = '$'+ calculatedLoss;
     document.title = 'You lost $'+calculatedLoss+' today';
 
     document.getElementById("timeNow").innerHTML = 'BETWEEN '+start+':00-'+d.getHours()+':'+d.getMinutes();
+
+    document.getElementById("ageNow").innerHTML = 'YOU EXISTED FOR '+Math.floor(aliveFor/365)+'-YEARS '+
+    ((aliveFor)-365*(Math.floor(aliveFor/365)))+'-DAYS '+d.getHours()+'-HOURS';
   
+    document.getElementById("left30").innerHTML = 'YOU\'RE GOING TO BE <span style="color:red">30-YEAR-OLD</span> IN '+(30-(Math.ceil(aliveFor/365)))+'-YEARS<BR>'+ (365-((aliveFor)-365*(Math.floor(aliveFor/365))))+'-DAYS '+(23-d.getHours())+'-HOURS '+(60-d.getMinutes())+'-MINUTES '+(60-d.getSeconds())+'-SECONDS';
+
+    document.getElementById("decadeAgo").innerHTML = 'YOU WERE <span style="color:red">'+(Math.floor(aliveFor/365)-10)+'-YEAR-OLD</span> <span style="color:blue">A DECADE</span> AGO';
+
   } else {
-  	var calculatedLoss = rate*((end - start));
+    var calculatedLoss = rate*((end - start));
     calculatedLoss = calculatedLoss.toFixed(2);
-    document.getElementById("loss").innerHTML = '-$'+ calculatedLoss;
+    document.getElementById("loss").innerHTML = '$'+ calculatedLoss;
     document.title = 'You lost $'+calculatedLoss+' today';
 
     document.getElementById("timeNow").innerHTML = 'BETWEEN '+start+':00-'+end+':00';
+
+
+    document.getElementById("ageNow").innerHTML = 'YOU EXISTED FOR '+Math.floor(aliveFor/365)+'-YEARS '+
+    ((aliveFor)-365*(Math.floor(aliveFor/365)))+'-DAYS '+d.getHours()+'-HOURS';
+  
+    document.getElementById("left30").innerHTML = 'YOU\'RE GOING TO BE <span style="color:red">30-YEAR-OLD</span> IN '+(30-(Math.ceil(aliveFor/365)))+'-YEARS<BR>'+ (365-((aliveFor)-365*(Math.floor(aliveFor/365))))+'-DAYS '+(23-d.getHours())+'-HOURS '+(60-d.getMinutes())+'-MINUTES '+(60-d.getSeconds())+'-SECONDS';
+
+    document.getElementById("decadeAgo").innerHTML = 'YOU WERE <span style="color:red">'+(Math.floor(aliveFor/365)-10)+'-YEAR-OLD</span> <span style="color:blue">A DECADE</span> AGO';
 }
 
 }, 100);
+
+
 
 </script>
 </body>
